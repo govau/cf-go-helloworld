@@ -1,0 +1,2 @@
+# Don't commit vendored code
+vendor/*/

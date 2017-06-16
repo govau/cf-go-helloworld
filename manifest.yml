@@ -1,0 +1,8 @@
+---
+applications:
+- name: go-helloworld
+  memory: 64M
+  buildpack: go_buildpack
+  command: cf-go-helloworld
+  env:
+    GOPACKAGENAME: github.com/govau/cf-go-helloworld

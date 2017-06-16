@@ -1,0 +1,30 @@
+---
+machine:
+  environment:
+    GOPATH: /home/ubuntu/go
+    PATH: '/usr/local/go/bin:/home/ubuntu/go/bin:$PATH'
+    ROOTPATH: /home/ubuntu/go/src/github.org/govau/cf-go-helloworld
+
+dependencies:
+  pre:
+    - curl -v -L -o cf-cli_amd64.deb 'https://cli.run.pivotal.io/stable?release=debian64&source=github'
+    - sudo dpkg -i cf-cli_amd64.deb
+    - cf -v
+    - go get -u github.com/kardianos/govendor
+  override:
+    - cd $ROOTPATH && govendor sync
+
+checkout:
+  post:
+    - mkdir -p $ROOTPATH
+    - cp -r "/home/ubuntu/$(basename $ROOTPATH)" $(dirname $ROOTPATH)
+
+test:
+  override:
+    - cd $ROOTPATH && govendor test +local
+
+deployment:
+  staging:
+    branch: master
+    commands:
+      - cd $ROOTPATH && bin/cideploy.sh
