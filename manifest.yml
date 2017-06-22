@@ -6,3 +6,5 @@ applications:
   command: cf-go-helloworld
   env:
     GOPACKAGENAME: github.com/govau/cf-go-helloworld
+  services:
+  - go-helloworld-db

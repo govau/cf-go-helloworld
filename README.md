@@ -1,9 +1,10 @@
 # Introduction
+
 This is a skeleton application to demonstrate a basic Golang application suitable for deployment on the cloud.gov.au CloudFoundry environment that:
 
 1. Uses a Postgresql database.
-2. Uses a vendor directory.
-3. Uses CircleCI with push-to-deploy.
+1. Uses a vendor directory.
+1. Uses CircleCI with push-to-deploy.
 
 This is very much a work-in-progress.
 
@@ -15,18 +16,19 @@ Create the database:
 cf create-service postgres shared go-helloworld-db
 ```
 
-Bind our app to it - note, that since we're using postgresql, we want to pick a username, else we lose access if we rename the app:
+Update `manifest.yml` to include a reference to our database service:
 
-```bash
-cf bind-service go-helloworld go-helloworld-db -c '{"username":"gohelloworlduser"}'
+```yaml
+  services:
+  - go-helloworld-db
 ```
 
-(TODO: see if there's a better way to fix this)
-
-Push it:
+Push it (recommended to use the [Blue/Green deployer plugin for CF](https://github.com/bluemixgaragelondon/cf-blue-green-deploy)):
 
 ```bash
-cf push
+cf blue-green-deploy go-helloworld
 ```
 
-Once-off, visit the bootstrap page: <https://\<url\>/bootstrap>
+(or, if you prefer downtime: `cf push`)
+
+Once-off, visit the bootstrap page: <https://your.site/bootstrap>
