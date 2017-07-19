@@ -23,6 +23,12 @@ Update `manifest.yml` to include a reference to our database service:
   - go-helloworld-db
 ```
 
+Sync [`govendor`](https://github.com/kardianos/govendor/blob/master/README.md) dependencies:
+
+```bash
+govendor sync
+```
+
 Push it (recommended to use the [Blue/Green deployer plugin for CF](https://github.com/bluemixgaragelondon/cf-blue-green-deploy)):
 
 ```bash
